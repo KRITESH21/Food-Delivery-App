@@ -1,3 +1,6 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+
 //creating an element using React
 
 // const parent = React.createElement("h1", { id: "heading" }, "I am the parent");
@@ -20,8 +23,8 @@ const parent = React.createElement(
   "div",
   { id: "parent" },
   React.createElement("div", { id: "child" }, [
-    React.createElement("h1", {}, "I am an h1 tag"),
-    React.createElement("h2", {}, "I am an h2 tag"),
+    React.createElement("h1", {key:"h1"}, "I am an h1 tag"),
+    React.createElement("h2", {key:"h2"}, "I am an h2 tag"),
   ])
 );
 const root = ReactDOM.createRoot(document.getElementById("root"));
