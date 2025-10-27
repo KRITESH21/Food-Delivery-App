@@ -1,7 +1,4 @@
-// import React from "react";
-import ReactDOM from "react-dom/client";
-
-const resList = [
+let resList = [
   {
     card: {
       card: {
@@ -789,87 +786,5 @@ const resList = [
     },
   },
 ];
-// console.log("object - ", resList);
-const Header = () => {
-  return (
-    <div className="header">
-      <div className="logo">
-        <img
-          src="https://www.shutterstock.com/image-vector/fresh-food-typography-logo-design-260nw-2179101939.jpg"
-          alt="logo"
-        />
-      </div>
-      <div className="nav-items">
-        <ul>
-          <li>Home</li>
-          <li>About Us</li>
-          <li>Contact</li>
-          <li>Cart</li>
-        </ul>
-      </div>
-    </div>
-  );
-};
 
-const styleCard = {
-  backgroundColor: "#f0f0f0",
-  padding: "5px",
-  margin: "10px",
-  borderRadius: "8px",
-  textAlign: "center",
-  width: "200px",
-};
-
-const RestaurantCard = (props) => {
-  // console.log("props - ", props);
-  const { resData } = props;
-  // console.log(resData);
-  const { name, cuisines, avgRating, costForTwo, cloudinaryImageId } = resData.card.card.info;
-  return (
-    <div className="res-card" style={styleCard}>
-      <img
-        className="res-logo"
-        alt="res-logo"
-        src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId}`}
-      />
-      <div>
-        <h3>{name}</h3>
-        <h3>{avgRating}</h3>
-        <h4>{cuisines.join(", ")}</h4>
-        <h4>{costForTwo}</h4>
-      </div>
-    </div>
-  );
-};
-
-const Body = () => {
-  return (
-    <div className="body">
-      <div className="search">Search</div>
-      <div className="res-container">
-        {resList.map((restaurant) => (
-          <RestaurantCard key={restaurant.card.card.info.id} resData={restaurant}/>
-        ))}
-        {/* <RestaurantCard
-          resName={resList[1].card.card.info.name}
-          cuisines={resList[1].card.card.info.cuisines}
-          avgRating={resList[1].card.card.info.avgRating}
-          costForTwo={resList[1].card.card.info.costForTwo}
-          cloudinaryImageId={resList[1].card.card.info.cloudinaryImageId}
-        /> */}
-      </div>
-    </div>
-  );
-};
-
-const AppLayout = () => {
-  return (
-    <div>
-      <Header />
-      <Body />
-    </div>
-  );
-};
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);
+export default resList;
