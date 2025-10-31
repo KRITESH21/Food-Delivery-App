@@ -16,7 +16,7 @@ const Body = () => {
     console.log("res", res);
 
     const restaurants =
-      res?.data?.cards[4].card.card.gridElements.infoWithStyle.restaurants;
+      res?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
 
     setlistOfRestaurants(restaurants);
     setfilteredRestaurant(restaurants);
