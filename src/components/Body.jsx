@@ -1,39 +1,57 @@
 import RestaurantCard from "./ReastaurantCard";
-import resList from "../utils/mockData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Body = () => {
+  const [listOfRestaurants, setlistOfRestaurants] = useState([]);
+  const [filteredRestaurant, setfilteredRestaurant] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const [listOfRestaurants, setRestaurants] = useState(resList);
+  const fetchData = async () => {
+    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.8428899&lng=77.64537949999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING#");
+    const res = await data.json();
+    console.log("res", res);
 
+    const restaurants =
+      res?.data?.cards[4].card.card.gridElements.infoWithStyle.restaurants;
 
-  return (
+    setlistOfRestaurants(restaurants);
+    setfilteredRestaurant(restaurants);
+    // console.log("restaurants", restaurants);
+  };
+
+  const handleFilter = () => {
+    const filteredRestaurant = listOfRestaurants.filter(
+      (restaurant) =>
+        restaurant?.info?.name.includes(searchText)
+    );
+    // console.log(filteredList)
+    setfilteredRestaurant(filteredRestaurant);
+  };
+
+  return listOfRestaurants.length === 0 ? (
+    <h1>Loading....</h1>
+  ) : (
     <div className="body">
-      <button
-        className="filter-btn"
-        onClick={() => {
-          console.log("Button is Clicked");
-          const filteredList = listOfRestaurants.filter((restaurant) => restaurant.card.card.info.avgRating > 4);
-          setRestaurants(filteredList);
+      <input
+        type="text"
+        value={searchText}
+        onChange={(e) => {
+          setSearchText(e.target.value);
         }}
-      >
-        Filter Button
+      />
+
+      <button className="filter-btn" onClick={handleFilter}>
+        Find Top Rated Restaurants
       </button>
+
       <div className="res-container">
-        {listOfRestaurants.map((restaurant) => (
-          <RestaurantCard
-            key={restaurant.card.card.info.id}
-            resData={restaurant}
-          />
+        {filteredRestaurant.map((restaurant) => (
+          <RestaurantCard key={restaurant?.info?.id} resData={restaurant} />
         ))}
-        {/* <RestaurantCard
-          resName={resList[1].card.card.info.name}
-          cuisines={resList[1].card.card.info.cuisines}
-          avgRating={resList[1].card.card.info.avgRating}
-          costForTwo={resList[1].card.card.info.costForTwo}
-          cloudinaryImageId={resList[1].card.card.info.cloudinaryImageId}
-        /> */}
       </div>
     </div>
   );
