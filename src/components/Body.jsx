@@ -24,20 +24,25 @@ const Body = () => {
   return listOfRestaurants.length === 0 ? (
     <h1>Loading....</h1>
   ) : (
-    <div className="body">
-      <input
-        type="text"
-        value={searchText}
-        onChange={(e) => {
-          setSearchText(e.target.value);
-        }}
-      />
+    <div className="flex flex-wrap justify-start">
+      <div className="flex gap-x-4 m-8">
+        <input
+          className="border border-gray-300 rounded px-3 py-2"
+          type="text"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+        />
 
-      <button className="filter-btn" onClick={handleFilter}>
-        Find Top Rated Restaurants
-      </button>
-
-      <div className="res-container">
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={handleFilter}
+        >
+          Search
+        </button>
+      </div>
+      <div className="flex flex-wrap gap-4 justify-start text-sm/6">
         {filteredRestaurant.map((restaurant) => (
           <Link
             to={`/restaurant/${restaurant?.info?.id}`}
