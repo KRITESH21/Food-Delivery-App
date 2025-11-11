@@ -1,13 +1,16 @@
-import RestaurantCard from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import RestaurantCard, {/* labelRestaurantCard */} from "./RestaurantCard";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import useRestaurantCard from "../utils/useRestaurantCard";
 import { useEffect } from "react";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const listOfRestaurants = useRestaurantCard();
   const [filteredRestaurant, setfilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  // const LabelRestaurantCard = labelRestaurantCard(RestaurantCard);
 
   useEffect(() => {
     setfilteredRestaurant(listOfRestaurants);
@@ -20,6 +23,8 @@ const Body = () => {
     // console.log(filteredList)
     setfilteredRestaurant(filteredRestaurant);
   };
+
+  const {loggedInUser,setUserName} = useContext(UserContext);
 
   return listOfRestaurants.length === 0 ? (
     <h1>Loading....</h1>
@@ -41,14 +46,19 @@ const Body = () => {
         >
           Search
         </button>
+        <input type="text" className="border" value={loggedInUser} onChange={(e)=>setUserName(e.target.value)}/>
       </div>
       <div className="flex flex-wrap gap-4 justify-start text-sm/6">
         {filteredRestaurant.map((restaurant) => (
+          console.log("res",restaurant),
           <Link
             to={`/restaurant/${restaurant?.info?.id}`}
             key={restaurant?.info?.id}
           >
-            <RestaurantCard resData={restaurant} />
+            {/*restaurant.data.promoted ? (
+              <LabelRestaurantCard resData={restaurant} />
+            ) : (*/}
+              <RestaurantCard resData={restaurant} />
           </Link>
         ))}
       </div>
