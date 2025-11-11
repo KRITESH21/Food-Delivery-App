@@ -1,11 +1,13 @@
 import { LOGO_URL } from "../utils/constants";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
   const [btnReact, setBtnReact] = useState("Login");
   const isOnline = useOnlineStatus();
+  const {loggedInUser} = useContext(UserContext);
 
   return (
     <div className="flex justify-between items-center rounded-md shadow-2xl bg-pink-100">
@@ -13,7 +15,7 @@ const Header = () => {
         <img src={LOGO_URL} alt="logo" />
       </div>
       <div className="nav-items">
-        <ul className="flex gap-x-4 font-sans font-semibold">
+        <ul className="flex gap-x-4 font-sans font-semibold m-2 p-2">
           <li>Online Status: {isOnline ? "✅" : "🔴"}</li>
           <li>
             <Link to="/">Home</Link>
@@ -34,6 +36,7 @@ const Header = () => {
           >
             {btnReact}
           </button>
+          <li>{loggedInUser}</li>
         </ul>
       </div>
     </div>
